@@ -1,11 +1,13 @@
 import re
 
-r_damege = r"([\+\-]?\d+\.\d+|[\+\-]?\d+)"
-r_health = r"[^\+\-\*\/\.\d \,]"
+r_damege = r"([\+\-]?[0-9]+\.[0-9]+|[\+\-]?[0-9]+)"
+r_health = r"[^\+\-\*\/\.\d]"
 
 demons = [x.strip() for x in input().split(", ")]
 demons.sort()
 for demon in demons:
+    demon = demon.replace(",", "")
+    demon = demon.replace(" ", "")
     damage = re.findall(r_damege, demon)
     damage = sum(float(x) for x in damage)
     health = re.findall(r_health, demon)
