@@ -2,13 +2,13 @@ import re
 text = input()
 destinations = []
 counter = 0
-regex = r"(=|/)([A-z][a-z]{2,})\1"
+regex = r"(\=|\/)([A-Z][A-Za-z]{2,})\1"
 
-result = re.findall(regex, text)
+result = re.finditer(regex, text, re.MULTILINE)
 
 
 for i in result:
-    res = i[1]
+    res = i.group(2)
     counter += len(res)
     destinations.append(res)
 print(f"Destinations: {', '.join(destinations)}")

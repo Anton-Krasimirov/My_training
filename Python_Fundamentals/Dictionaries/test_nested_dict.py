@@ -94,10 +94,15 @@ print(dict_values)
 nesteddict = dict(zip(keys, dict_values))
 
 print(nesteddict)
-for k, v in nesteddict.items():
-    print(k)
-    for n in v:
-        print(n, v[n])
+# =================================================================================
+# {'Tanya': {'C# Fundamentals': 350, 'Algorithms': 380, 'Part One Interview': 220, 'Js Fundamentals': 400},
+#            'Nikola': {'Part One Interview': 120, 'C# Fundamentals': 200}}
+# for username in results.keys():
+#     total = sum(results.get(username).values())
+#     results[username] = [results[username], total]
+#     results[username][0] = dict(sorted(results.get(username)[0].items(), key=lambda x: x[1], reverse=True))
+# {'Tanya': [{'Js Fundamentals': 400, 'Algorithms': 380, 'C# Fundamentals': 350, 'Part One Interview': 220}, 1350],
+#           'Nikola': [{'C# Fundamentals': 200, 'Part One Interview': 120}, 320]}
 #=================================================================================
 # принтиране на вложен речник
 # people = {1: {'Name': 'John', 'Age': '27', 'Sex': 'Male'},
