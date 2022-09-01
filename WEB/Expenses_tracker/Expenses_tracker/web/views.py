@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from Expenses_tracker.web.forms import CreateProfileForm, CreateExpenseForm
+from Expenses_tracker.web.forms import CreateProfileForm, CreateExpenseForm, EditExpenseForm, DeleteExpenseForm
 from Expenses_tracker.web.models import Profile, Expense
 
 
@@ -42,11 +42,37 @@ def create_expense(request):
 
 
 def edit_expense(request, pk):
-    pass
+    expense = Expense.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = EditExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect('home page')
+    else:
+        form = EditExpenseForm(instance=expense)
+
+    context = {
+        'form': form,
+        'expense': expense,
+    }
+    return render(request, 'expense-edit.html', context)
 
 
 def delete_expense(request, pk):
-    pass
+    expense = Expense.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = DeleteExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect('home page')
+    else:
+        form = DeleteExpenseForm(instance=expense)
+
+    context = {
+        'form': form,
+        'expense': expense,
+    }
+    return render(request, 'expense-delete.html', context)
 
 
 def show_profile(request):

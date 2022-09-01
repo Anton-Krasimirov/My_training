@@ -29,7 +29,33 @@ class CreateExpenseForm(forms.ModelForm):
 class EditExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ()
+        fields = ('title', 'description', 'image', 'price')
         labels = {
-
+            'title': 'Title',
+            'description': 'Description',
+            'image': 'Link to Image',
+            'price': 'Price',
         }
+
+class DeleteExpenseForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, field in self.fields.items():
+            field.widget.attrs['readonly'] = 'readonly'
+            field.required = False
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+
+    class Meta:
+        model = Expense
+        fields = ('title', 'description', 'image', 'price')
+        labels = {
+            'title': 'Title',
+            'description': 'Description',
+            'image': 'Link to Image',
+            'price': 'Price',
+        }
+
