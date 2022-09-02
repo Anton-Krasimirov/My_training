@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
-from Expenses_tracker.web.forms import CreateProfileForm, CreateExpenseForm, EditExpenseForm, DeleteExpenseForm
+from Expenses_tracker.web.forms import CreateProfileForm, CreateExpenseForm, EditExpenseForm, DeleteExpenseForm, \
+    EditProfileForm, DeleteProfileForm
 from Expenses_tracker.web.models import Profile, Expense
 
 
@@ -76,7 +77,17 @@ def delete_expense(request, pk):
 
 
 def show_profile(request):
-    pass
+    profile = check_profile()
+    expenses = Expense.objects.all()
+    budget_left = profile.budget - sum(x.price for x in expenses)
+    expenses_count = len(expenses)
+
+    context = {
+        'profile': profile,
+        'expenses_count': expenses_count,
+        'budget_left': budget_left,
+    }
+    return render(request, 'profile.html', context)
 
 
 def create_profile(request):
@@ -96,10 +107,33 @@ def create_profile(request):
 
 
 def profile_edit(request):
-    pass
+    profile = check_profile()
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('show profile')
+    else:
+        form = EditProfileForm(instance=profile)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'profile-edit.html', context)
 
 
 
 def delete_profile(request):
-    pass
+    profile = check_profile()
+    if request.method == 'POST':
+        form = DeleteProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('home page')
+    else:
+        form = DeleteProfileForm(instance=profile)
 
+    context = {
+        'form': form,
+    }
+    return render(request, 'profile-delete.html', context)

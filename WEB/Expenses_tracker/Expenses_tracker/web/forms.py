@@ -15,6 +15,33 @@ class CreateProfileForm(forms.ModelForm):
             'profile_image': 'Profile Image',
         }
 
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('budget', 'first_name', 'last_name', 'profile_image',)
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'budget': 'Budget',
+            'profile_image': 'Profile Image',
+        }
+
+
+class DeleteProfileForm(forms.ModelForm):
+    def save(self, commit=True):
+        image_path = self.instance.profile_image.path
+        self.instance.delete()
+        Expense.objects.all().delete()
+        os.remove(image_path)
+        return self.instance
+
+    class Meta:
+        model = Profile
+        fields = ()
+
+
+
 class CreateExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
