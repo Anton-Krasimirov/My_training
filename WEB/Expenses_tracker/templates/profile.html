@@ -11,9 +11,9 @@
             <!-- Full Name -->
             <h2>{{ profile.full_name }}</h2>
             {% if profile.profile_image %}
-                <img src="{{ profile.profile_image.url }} %}static" alt="profile pic">
+                <img src="{{ profile.profile_image.url }}" alt="profile pic">
             {% else %}
-                <img src="{% static 'images/user.png' %}static" alt="profile pic">
+                <img src="{% static 'images/user.png' %}" alt="profile pic">
             {% endif %}
             <!-- Total Items Bought -->
             <p>Total Items Budget: {{ expenses_count}}</p>
