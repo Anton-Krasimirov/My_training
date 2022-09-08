@@ -9,7 +9,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}static">
     <title>GamesPlay</title>
+
+    {% if no_profile %}
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="#">Create Game</a>
+            <a href="#">Profile</a>
+        </nav>
+    {% else %}
+        <nav>
+        <a href="#">Create Profile</a>
+        </nav>
+    {% endif %}
+
 </head>
+
+
+
 <body>
 <div class="body">
     {% block page_content %}
